@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="jquery-3.5.1.min.js"></script>
+    <script src="Snap.svg-0.5.1/dist/snap.svg.js"></script>
+</head>
+<body>
+
+<input id="inval" type="number" value="100">
+<button onclick="fn1()">set Angle</button>
+
+<input id="textVal" type="text" value="100">
+<button onclick="fn2()">set text</button>
+
+<input id="hVal" type="number" value="100">
+<button onclick="fn3()">set value</button>
+
+
+
+<div id="level-progress"></div>
+<div id="gauge-content"></div>
+<div id="svg_content" style="background-color: gray;"></div>
+
+<script>
+
+    Snap.plugin( function( Snap, Element, Paper, global ) {
+        e = Element.prototype;
+
+        e.inkscapeRotate = function(val) {
+            var px = this.getBBox(true).cx + parseFloat(this.attr('inkscape:transform-center-x'));
+            var py = this.getBBox(true).cy - parseFloat(this.attr('inkscape:transform-center-y'));
+            this.transform( "r" + val + ',' + px + ',' + py );
+        };
+
+        e.inkscapeRotation = function (minVal, maxVal, minAngle, maxAngle) {
+            var x1 = minVal;
+            var x2 = maxVal;
+            var y1 = minAngle;
+            var y2 = maxAngle;
+            var m = (y2 - y1) / (x2 - x1);
+            var pv = 0;
+            this.rotate = function (value) {
+                var x = value<minVal?minVal:value>maxVal?maxVal:value;
+                var val = (m * x) + (y1 - (m * x1));
+                var px = this.getBBox(true).cx + parseFloat(this.attr('inkscape:transform-center-x'));
+                var py = this.getBBox(true).cy - parseFloat(this.attr('inkscape:transform-center-y'));
+                var me = this;
+                Snap.animate(pv, val, function (va) {
+                    me.transform( "r" + va + ',' + px + ',' + py );
+                    pv = va;
+                }, 1000);
+            }
+            this.rotate(minVal);
+            return this;
+        }
+
+        e.inkscapeSetColor = function(colorCode) {
+            this.attr({
+                fill: colorCode
+            });
+        };
+
+        e.inkscapeSetText = function(text) {
+            this.attr({
+                text: text
+            });
+        };
+
+        e.inkscapeProgress = function(fixedAt) {
+            const se = this;
+            const b = se.getBBox(true);
+            console.log(b);
+            let pv = 100;
+            this.value = function (v) {
+                const ht = (b.h * (v/100));
+                const wt = (b.w * (v/100));
+
+                switch (fixedAt) {
+                    case "top": se.attr({height: ht}); break;
+                    case "bottom": se.attr({height: ht, y: b.y + (b.h - ht)}); break;
+                    case "left": se.attr({width: wt}); break;
+                    case "right": se.attr({width: wt, x: b.x + (b.w - wt)}); break;
+                }
+            }
+            let invf = this.value;
+            this.animate = function (av) {
+                Snap.animate(pv, av, function (anv) {
+                    invf(anv);
+                    pv = anv;
+                }, 1000);
+            }
+            return this;
+        }
+    });
+
+    //-----------------------------------------------------------------------------------------------------------------
+
+    // var s = Snap("24in","12in");
+    var s = Snap("#svg_content");
+    var t;
+    var hv;
+    Snap.load("three-box-drawing.svg", function (f) {
+
+        var progress = f.select("#BOX1");
+
+        hv = progress.inkscapeProgress('bottom');
+
+        console.log();
+
+
+        var y = f.select("#BOX3");
+
+        t = f.select("#TEXT1").attr({
+            text: "My new text",
+            fill: "white"
+        });
+
+        Snap.animate(0, 360, function (val) {
+            y.inkscapeRotate(val);
+        }, 12000);
+
+        s.append(f);
+    });
+
+    var g = Snap("#gauge-content");
+    var k;
+    Snap.load("gauge.svg", function (d) {
+        var kata = d.select("#KATA").attr({
+            text: "rrrrrrrrrrrrrr",
+            //fill: "#DDD"
+        });
+
+        kata.setColor('#FF0000');
+        k = kata.inkscapeRotation(0, 100, -90, 90);
+        g.append(d);
+    });
+
+    function fn1() {
+        var vt = $("#inval").val();
+        k.rotate(vt);
+    }
+    function fn2() {
+        var vt = $("#textVal").val();
+        t.setText(vt)
+    }
+
+    function fn3() {
+        hv.animate($("#hVal").val());
+    }
+
+    var lp = Snap("level-progress");
+    var lpl;
+
+    // Snap.load("drawing.svg", function (l) {
+    //
+    //     lp.append(l);
+    // });
+
+
+</script>
+
+
+</body>
+</html>

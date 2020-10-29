@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="three-box-drawing.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="400"
+     inkscape:cy="788.57143"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="961"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#6ac100;fill-opacity:1;stroke-width:0.173045"
+       id="BOX1"
+       width="31.750002"
+       height="224.63664"
+       x="162.55148"
+       y="55.820614" />
+    <rect
+       style="fill:#ff0000;fill-opacity:1;stroke-width:0.264583"
+       id="BOX2"
+       width="122.46429"
+       height="136.82739"
+       x="-51.404762"
+       y="97.51786" />
+    <rect
+       style="fill:#d4aa00;fill-opacity:1;stroke-width:0.238239"
+       id="BOX3"
+       width="105.09723"
+       height="105.84552"
+       x="46.379986"
+       y="64.73439"
+       inkscape:label="LBOX3"
+       ry="8.4115648"
+       inkscape:transform-center-y="38.821755"
+       inkscape:transform-center-x="-37.301554"
+       transform="matrix(0.99999848,0.00174571,-0.00155228,0.9999988,0,0)">
+      <title
+         id="title839">box 3 title</title>
+    </rect>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-24.190477"
+       y="170.08929"
+       id="TEXT1"><tspan
+         sodipodi:role="line"
+         id="tspan841"
+         x="-24.190477"
+         y="170.08929"
+         style="stroke-width:0.264583">Hello</tspan></text>
+  </g>
+</svg>
