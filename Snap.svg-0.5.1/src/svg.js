@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var Snap = (function(root) {
+var Inkscape = (function(root) {
 Snap.version = "0.5.1";
 /*\
  * Snap

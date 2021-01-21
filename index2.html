@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="jquery-3.5.1.min.js"></script>
+    <script src="Snap.svg-0.5.1/dist/snap.svg.js"></script>
     <script src="inkscape-io/inkscape-io.js"></script>
 </head>
 <body>
@@ -14,18 +15,15 @@
 <input id="inval" type="number" value="100">
 <button onclick="fn1()">set Angle</button>
 
-<input id="textVal" type="text" value="Another Text">
+<input id="textVal" type="text" value="100">
 <button onclick="fn2()">set text</button>
 
-<input id="hVal" type="number" value="50">
-<button onclick="fn3()">set progress</button>
+<input id="hVal" type="number" value="100">
+<button onclick="fn3()">set value</button>
 
-<input id="mVal" type="number" value="25">
+<input id="mVal" type="number" value="100">
 <button onclick="fn4()">set value</button>
 
-<input id="sVal" type="number" value="270.0">
-<button onclick="fnx1()">set Sodipodi</button>
-<br><br>
 <button onclick="fn5(this.innerText)">hide</button>
 <button onclick="fn5(this.innerText)">show</button>
 <button onclick="fn5(this.innerText)">blink</button>
@@ -36,52 +34,73 @@
 <button onclick="fn5(this.innerText)">blinkAnimate</button>
 <button onclick="fn5(this.innerText)">blinkAnimateAutoStart</button>
 <button onclick="fn5(this.innerText)">blinkAnimateAutoStop</button>
-<br><br>
-<button onclick="fn6(this.innerText)">fanStart</button>
-<button onclick="fn6(this.innerText)">fanStop</button>
 
-
-<div id="example-content" style="width: 700px;"></div>
 <div id="gauge-content"></div>
 <div id="svg_content" style="background-color: gray;"></div>
 
 <script>
+
     // var s = Snap("24in","12in");
-    var contentView = Inkscape("#example-content"),
-        kata, textField, progress, movers, iv, fan, cirp;
-    Inkscape.load("inkscape-dxample-drawing.svg", function (svgImage) {
-        brr = svgImage.select("#RECT").inkscapeRotation(0,360,0,360);
-        brr.setAnimateTime(5000);
-        brr.animate(360);
+    var s = Snap("#svg_content");
+    var t;
+    var hv;
+    Snap.load("three-box-drawing.svg", function (f) {
 
-        kata = svgImage.select("#KATA").inkscapeRotation(0, 100, -90, 90);
-        textField = svgImage.select("#TEXTFIELD");
-        progress = svgImage.select("#PROGRESS").inkscapeProgress("left");
-        movers = svgImage.select("#MOVER").inkscapeMove("right");
-        iv = svgImage.select("#BLINK").inkscapeVisibiliy();
-        fan = svgImage.select("#FAN").inkscapeRotation(0,360,0,360);
-        cirp = svgImage.select("#MYARC").inkscapeCirp();
+        var progress = f.select("#BOX1");
 
-        contentView.append(svgImage);
+        hv = progress.inkscapeProgress('bottom');
+        hm = progress.inkscapeMove('up');
+        iv = progress.inkscapeVisibiliy();
+        
+
+        console.log();
+
+        var y = f.select("#BOX3");
+        ya = y.inkscapeRotation(0,360,0,360);
+        ya.setAnimateTime(5000);
+        ya.animate(360);
+
+
+
+        t = f.select("#TEXT1").attr({
+            text: "My new text",
+            fill: "white"
+        });
+
+
+        s.append(f);
+    });
+
+    var g = Snap("#gauge-content");
+    var k;
+    Snap.load("gauge.svg", function (d) {
+        var kata = d.select("#KATA").attr({
+            text: "rrrrrrrrrrrrrr",
+            //fill: "#DDD"
+        });
+
+        kata.inkscapeSetColor('#FF0000');
+        k = kata.inkscapeRotation(0, 100, -90, 90);
+        g.append(d);
     });
 
     function fn1() {
         var vt = $("#inval").val();
-        kata.animate(vt);
+        k.animate(vt);
     }
-
     function fn2() {
         var vt = $("#textVal").val();
-        textField.inkscapeSetText(vt)
+        t.inkscapeSetText(vt)
     }
 
     function fn3() {
-        progress.animate($("#hVal").val());
+        hv.animate($("#hVal").val());
     }
 
     function fn4() {
         var x = $("#mVal").val();
-        movers.animate(x);
+        hm.animate(x);
+        console.log(x+5);
     }
 
     function fn5(n) {
@@ -98,24 +117,10 @@
             case 'blinkAnimateAutoStart': iv.blinkAnimateAutoStart(); break;
             case 'blinkAnimateAutoStop': iv.blinkAnimateAutoStop(); break;
         }
+
     }
 
-    function fn6(n) {
-        switch (n) {
-            case 'fanStart':
-                fan.setAnimateTime(1000);
-                fan.animateAutoStart();
-                break;
-            case 'fanStop':
-                fan.animateAUtoStop();
-                break;
-        }
-    }
 
-    function fnx1() {
-        var x = $("#sVal").val();
-        cirp.prog(x);
-    }
 
 </script>
 
