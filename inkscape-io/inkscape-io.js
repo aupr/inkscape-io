@@ -8630,8 +8630,8 @@
                 var x = value<minVal?minVal:value>maxVal?maxVal:value;
                 var val = (m * x) + (y1 - (m * x1));
                 var b = this.getBBox(true);
-                var px = b.cx + parseFloat(this.attr('inkscape:transform-center-x'));
-                var py = b.cy - parseFloat(this.attr('inkscape:transform-center-y'));
+                var px = b.cx + parseFloat(this.attr('inkscape:transform-center-x') || "0");
+                var py = b.cy - parseFloat(this.attr('inkscape:transform-center-y') || "0");
                 me.transform( "r" + val + ',' + px + ',' + py );
                 pv = val;
             };
@@ -8645,7 +8645,7 @@
                     }, animateTime);
                 }
             };
-            this.animateAUtoStop = function () {
+            this.animateAutoStop = function () {
                 if (timer !== null) {
                     clearInterval(timer);
                     timer = null;
@@ -8657,7 +8657,7 @@
 
         // visibility // opacity
         // TODO: have to complete this function
-        e.inkscapeVisibiliy = function() {
+        e.inkscapeVisibility = function() {
             var timer = null;
             var blinkDelay = 300;
             var animateTime = 300;
@@ -8667,7 +8667,10 @@
             };
             this.setAnimateTime = function(ms) {
                 animateTime = ms;
-            }
+            };
+            this.setOpacity = function (v = 1) {
+                me.attr({opacity: v});
+            };
             this.hide = function () {
                 me.attr({visibility:'hidden'});
             };
@@ -8772,38 +8775,78 @@
             return this;
         };
 
-        e.inkscapeMove = function (direction) {
-            const se = this;
-            //const b = se.getBBox(true);
-            let pv = 0;
+        e.inkscapeMove = function (xMinVal, xMaxVal, yMinVal, yMaxVal, xMinLimit, xMaxLimit, yMinLimit, yMaxLimit) {
+            var timer = null;
+            var x = 0;
+            var y = 0;
+            var xx1 = xMinVal;
+            var xx2 = xMaxVal;
+            var xy1 = xMinLimit;
+            var xy2 = xMaxLimit;
+            var xm = (xy2 - xy1) / (xx2 - xx1);
+            var yx1 = yMinVal;
+            var yx2 = yMaxVal;
+            var yy1 = yMinLimit;
+            var yy2 = yMaxLimit;
+            var ym = (yy2 - yy1) / (yx2 - yx1);
             var animateTime = 1000;
+            var px = 0;
+            var py = 0;
+            var me = this;
+            //const b = se.getBBox(true);
             this.setAnimateTime = function (ms) {
                 animateTime = ms;
             };
-            this.move = function (v) {
-                v = parseInt(v);
-                switch (direction) {
-                    case "left": se.transform("t-" + v); break;
-                    case "right": se.transform("t" + v); /*se.attr({x: b.x + v});*/ break;
-                    case "up": se.transform("t0,-" + v); break;
-                    case "down": se.transform("t0," + v); break;
-                }
+            this.xMove = function (xValue) {
+                var xval = xValue<xMinVal?xMinVal:xValue>xMaxVal?xMaxVal:xValue;
+                x = (xm * xval) + (xy1 - (xm * xx1));
+                me.transform("t" + x + "," + y);
+                px = xValue;
             };
-            let invf = this.move;
-            this.animate = function (av) {
-                Inkscape.animate(pv, av, function (anv) {
-                    invf(anv);
-                    pv = anv;
+            this.yMove = function (yValue) {
+                var yval = yValue<yMinVal?yMinVal:yValue>yMaxVal?yMaxVal:yValue;
+                y = (ym * yval) + (yy1 - (ym * yx1));
+                me.transform("t" + x + "," + y);
+                py = yValue;
+            };
+            this.move = function (xValue, yValue) {
+                var xval = xValue<xMinVal?xMinVal:xValue>xMaxVal?xMaxVal:xValue;
+                x = (xm * xval) + (xy1 - (xm * xx1));
+                var yval = yValue<yMinVal?yMinVal:yValue>yMaxVal?yMaxVal:yValue;
+                y = (ym * yval) + (yy1 - (ym * yx1));
+                me.transform("t" + x + "," + y);
+            };
+
+            this.xAnimate = function (xv) {
+                Inkscape.animate(px, xv, function (xnv) {
+                   me.xMove(xnv);
                 }, animateTime);
             };
+            this.yAnimate = function (yv) {
+                Inkscape.animate(py, yv, function (ynv) {
+                    me.yMove(ynv);
+                }, animateTime);
+            };
+            this.animate = function (xv, yv) {
+                me.xAnimate(xv);
+                me.yAnimate(yv);
+            };
+            me.xMove(xMinVal);
+            me.yMove(yMinVal);
             return this;
-        }
-        e.inkscapeCirp = function () {
+        };
+        e.inkscapeArcProgress = function (minVal, maxVal, minAngle, maxAngle) {
+            var timer = null;
+            var x1 = minVal;
+            var x2 = maxVal;
+            var y1 = minAngle;
+            var y2 = maxAngle;
+            var m = (y2 - y1) / (x2 - x1);
+            var animateTime = 1000;
+            var pv = minAngle;
             var me = this;
             var b = this.getBBox(true);
-            console.log(b);
-
-            var startDeg = 90;
+            var startDeg = minAngle;
             var center = {
                 x:0,
                 y:0
@@ -8820,12 +8863,17 @@
                 center.x = startDeg < 270 ? b.x2 : b.x;
                 center.y = b.cy;
             }
+            this.setAnimateTime = function (ms) {
+                animateTime = ms;
+            };
 
 
-            this.prog = function (del) {
-                compv = 360 + startDeg - 0.01;
-                del = (del<startDeg?startDeg:del).toString()
-                del = (del>compv?compv:del).toString();
+            this.value = function (value) {
+                var x = value<minVal?minVal:value>maxVal?maxVal:value;
+                var del = ((m * x) + (y1 - (m * x1))).toString();
+                //var compv = 360 + startDeg - 0.01;
+                //del = (del<startDeg?startDeg:del).toString()
+                //del = (del>compv?compv:del).toString();
 
                 var startPoint = {
                     x: center.x + radius * Math.cos(Math.PI*(startDeg)/180),
@@ -8844,9 +8892,34 @@
                     largeArc + ",1 " + endPoint.x + "," + endPoint.y;// + " Z"; // Z is to join las two points
 
                 me.attr({d:path});
-            }
-            return this;
+            };
+            this.animate = function (value) {
+                var x = value<minVal?minVal:value>maxVal?maxVal:value;
+                var del = ((m * x) + (y1 - (m * x1))).toString();
 
+                var startPoint = {
+                    x: center.x + radius * Math.cos(Math.PI*(startDeg)/180),
+                    y: center.y + radius * Math.sin(Math.PI*(startDeg)/180)
+                };
+
+                Inkscape.animate(pv, del, function (delta) {
+                    delta = delta.toString();
+                    var endPoint = {
+                        x: center.x + radius * Math.cos(Math.PI*(startDeg + delta)/180),
+                        y: center.y + radius * Math.sin(Math.PI*(startDeg + delta)/180)
+                    };
+
+                    var largeArc = delta>(180+startDeg)?1:0;
+
+                    var path = "M" + startPoint.x + "," + startPoint.y +
+                        " A" + radius + "," + radius + " 0 " +
+                        largeArc + ",1 " + endPoint.x + "," + endPoint.y;
+
+                    me.attr({d:path});
+                    pv = delta;
+                }, animateTime);
+            };
+            return this;
         }
 
     });

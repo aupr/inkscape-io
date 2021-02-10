@@ -49,7 +49,7 @@
     // var s = Snap("24in","12in");
     var contentView = Inkscape("#example-content"),
         kata, textField, progress, movers, iv, fan, cirp;
-    Inkscape.load("inkscape-dxample-drawing.svg", function (svgImage) {
+    Inkscape.load("http://localhost/inkscape-io/inkscape-dxample-drawing.svg", function (svgImage) {
         brr = svgImage.select("#RECT").inkscapeRotation(0,360,0,360);
         brr.setAnimateTime(5000);
         brr.animate(360);
@@ -57,10 +57,10 @@
         kata = svgImage.select("#KATA").inkscapeRotation(0, 100, -90, 90);
         textField = svgImage.select("#TEXTFIELD");
         progress = svgImage.select("#PROGRESS").inkscapeProgress("left");
-        movers = svgImage.select("#MOVER").inkscapeMove("right");
+        movers = svgImage.select("#MOVER").inkscapeMove(0,100,0,100,-25,25,-10,10);
         iv = svgImage.select("#BLINK").inkscapeVisibiliy();
         fan = svgImage.select("#FAN").inkscapeRotation(0,360,0,360);
-        cirp = svgImage.select("#MYARC").inkscapeCirp();
+        cirp = svgImage.select("#MYARC").inkscapeArcProgress(0,100,180,360);
 
         contentView.append(svgImage);
     });
@@ -81,7 +81,7 @@
 
     function fn4() {
         var x = $("#mVal").val();
-        movers.animate(x);
+        movers.animate(x,50);
     }
 
     function fn5(n) {
@@ -107,14 +107,14 @@
                 fan.animateAutoStart();
                 break;
             case 'fanStop':
-                fan.animateAUtoStop();
+                fan.animateAutoStop();
                 break;
         }
     }
 
     function fnx1() {
         var x = $("#sVal").val();
-        cirp.prog(x);
+        cirp.animate(x);
     }
 
 </script>

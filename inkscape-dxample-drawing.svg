@@ -38,9 +38,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.96377841"
-     inkscape:cx="424.68971"
-     inkscape:cy="177.25112"
+     inkscape:zoom="1.3629885"
+     inkscape:cx="356.25398"
+     inkscape:cy="357.95138"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -60,7 +60,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -71,8 +71,6 @@
     <path
        id="FAN"
        style="fill:#d4aa00;stroke-width:0.264583"
-       inkscape:transform-center-x="1.4978972"
-       inkscape:transform-center-y="1.1882751"
        d="m 210.8994,95.074621 4.77232,9.824719 -15.95459,6.1495 10.81898,-1.50275 0.91829,17.07338 1.91358,-10.75335 16.52199,4.40283 -9.63559,-5.14336 9.29246,-14.35261 -7.86929,7.57473 z m 5.29115,13.255519 a 2.0971894,2.0382597 0 0 1 0.0139,0 2.0971894,2.0382597 0 0 1 2.09703,2.03864 2.0971894,2.0382597 0 0 1 -2.09703,2.03812 2.0971894,2.0382597 0 0 1 -2.09703,-2.03812 2.0971894,2.0382597 0 0 1 2.08308,-2.03864 z" />
     <path
        class="st0"
@@ -125,19 +123,6 @@
        cx="180.70268"
        cy="29.539593"
        r="12.351981" />
-    <rect
-       style="fill:#483e37;stroke-width:0.0731982"
-       id="rect51"
-       width="60.793224"
-       height="2.3629878"
-       x="97.13884"
-       y="80.77346" />
-    <path
-       id="MOVER"
-       style="fill:#483e37;stroke-width:0.0278201"
-       inkscape:transform-center-x="-0.6018226"
-       inkscape:transform-center-y="-0.73714595"
-       d="m 124.45912,88.903662 5.9611,-8.3e-4 -2.97472,-6.057374 z" />
     <rect
        style="fill:#483e37;stroke-width:0.0731982"
        id="rect63"
@@ -231,5 +216,18 @@
        sodipodi:open="true"
        sodipodi:arc-type="arc"
        d="m 226.34392,60.759563 a 11.258961,11.258961 0 0 1 -5.62948,9.750547 11.258961,11.258961 0 0 1 -11.25896,-10e-7 11.258961,11.258961 0 0 1 -5.62948,-9.750546" />
+    <rect
+       style="fill:#483e37;stroke-width:0.0731982"
+       id="rect51"
+       width="60.793224"
+       height="2.3629878"
+       x="97.13884"
+       y="80.77346" />
+    <path
+       id="MOVER"
+       style="fill:#483e37;stroke-width:0.0278201"
+       inkscape:transform-center-x="-0.6018226"
+       inkscape:transform-center-y="-0.73714595"
+       d="m 124.45912,88.903662 5.9611,-8.3e-4 -2.97472,-6.057374 z" />
   </g>
 </svg>
